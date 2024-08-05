@@ -11,7 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type appConfig struct {
+type config struct {
 	DB *database.Queries
 }
 
@@ -33,7 +33,7 @@ func main() {
 
 	// Initialize appConfig
 	dbQueries := database.New(db)
-	cfg := appConfig{
+	cfg := config{
 		DB: dbQueries,
 	}
 
