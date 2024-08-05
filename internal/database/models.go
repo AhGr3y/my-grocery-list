@@ -31,3 +31,8 @@ type Item struct {
 	Name      string
 	BrandID   uuid.UUID
 }
+
+type ItemsCategory struct {
+	ItemID     uuid.UUID
+	CategoryID uuid.UUID
+}
