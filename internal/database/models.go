@@ -23,3 +23,11 @@ type Category struct {
 	UpdatedAt time.Time
 	Name      string
 }
+
+type Item struct {
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Name      string
+	BrandID   uuid.UUID
+}
