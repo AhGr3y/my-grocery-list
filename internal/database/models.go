@@ -36,3 +36,11 @@ type ItemsCategory struct {
 	ItemID     uuid.UUID
 	CategoryID uuid.UUID
 }
+
+type Priority struct {
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Name      string
+	ItemID    uuid.UUID
+}
