@@ -10,6 +10,10 @@ var commandList = map[string]cliCommand{
 	"exit": cliCommand{
 		name:        "exit",
 		description: "Exit the program",
-		callback:    nil,
+		callback:    commandExit,
 	},
+}
+
+func validateCommand(userInput string) error {
+	return nil
 }
