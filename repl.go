@@ -15,9 +15,10 @@ func startRepl(cfg *config) {
 		reader.Scan()
 		userInput := reader.Text()
 
-		if userInput == "exit" {
-			os.Exit(1)
+		_, commandExist := commandList[userInput]
+		if !commandExist {
+			fmt.Println("Please enter a valid command.")
+			continue
 		}
-		fmt.Printf("You typed %d characters.\n", len(userInput))
 	}
 }
