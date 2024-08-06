@@ -16,3 +16,10 @@ type Brand struct {
 	UpdatedAt time.Time
 	Name      string
 }
+
+type Category struct {
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Name      string
+}
