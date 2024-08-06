@@ -5,6 +5,7 @@
 package database
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
@@ -31,4 +32,14 @@ type Item struct {
 	Name       string
 	BrandID    uuid.UUID
 	CategoryID uuid.UUID
+}
+
+type ItemsOnHand struct {
+	ID         uuid.UUID
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	ItemID     uuid.UUID
+	Quantity   int32
+	ExpiryDate sql.NullTime
+	Priority   string
 }
