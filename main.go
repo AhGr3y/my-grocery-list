@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
@@ -37,5 +36,5 @@ func main() {
 		DB: dbQueries,
 	}
 
-	fmt.Println("Hello world!")
+	startRepl(&cfg)
 }
