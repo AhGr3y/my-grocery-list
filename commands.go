@@ -7,10 +7,15 @@ type cliCommand struct {
 }
 
 var commandList = map[string]cliCommand{
-	"exit": cliCommand{
+	"exit": {
 		name:        "exit",
 		description: "Exit the program",
 		callback:    commandExit,
+	},
+	"help": {
+		name:        "help",
+		description: "See the guide for using this program",
+		callback:    commandHelp,
 	},
 }
 
