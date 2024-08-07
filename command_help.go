@@ -9,7 +9,7 @@ func commandHelp(cfg *config, args ...string) error {
 
 	// help command does not require additional arguments
 	if len(args) != 0 {
-		return errors.New("'help' command does not require additional arguments. Try 'help' instead")
+		return errors.New("'help' command does not require additional arguments. Use 'help' instead")
 	}
 
 	intro := `

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 )
@@ -19,14 +20,18 @@ func startRepl(cfg *config) {
 		userInput := reader.Text()
 
 		// Check if user entered valid command
-		_, commandExist := commandList[userInput]
-		if !commandExist {
-			fmt.Println("Please enter a valid command.")
-			continue
+		args, err := validateCommand(userInput)
+		if err != nil {
+			if errors.Is(err, ErrEmptyCommand) {
+				continue
+			} else {
+				fmt.Printf("Error: %s.\n", err.Error())
+				continue
+			}
 		}
 
 		// Execute command
-		err := commandList[userInput].callback(cfg)
+		err = commandList[userInput].callback(cfg, args...)
 		if err != nil {
 			fmt.Printf("MyGroceryList > " + err.Error())
 			continue
