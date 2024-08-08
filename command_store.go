@@ -2,14 +2,16 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"errors"
 	"fmt"
 	"os"
 	"strconv"
 )
 
-func checkBrand(brand string) bool {
-	return false
+func checkBrand(cfg *config, brand string) bool {
+	_, err := cfg.DB.GetBrand(context.Background(), brand)
+	return err == nil
 }
 
 func promptUserForYesNo() (bool, error) {
@@ -50,7 +52,7 @@ func commandStore(cfg *config, args ...string) error {
 	// Get user confirmation to create new brand
 	item_name := args[1]
 	item_brand := args[2]
-	brandExist := checkBrand(item_brand)
+	brandExist := checkBrand(cfg, item_brand)
 	if !brandExist {
 		// Loop until user input valid response
 		for {
