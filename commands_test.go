@@ -19,11 +19,11 @@ func TestCommandValidation(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got, _ := validateCommand(c.input)
 			if len(got) != len(c.want) {
-				t.Errorf("%v: len(got)=%v but len(c.want)=%v", name, len(got), len(c.want))
+				t.Errorf("Unexpected slice length\n\texpected: %v\n\tgot: %v", len(got), len(c.want))
 			}
 			for i := range got {
 				if got[i] != c.want[i] {
-					t.Errorf("%v: %v != %v", name, got[i], c.want[i])
+					t.Errorf("Unexpected slice item\n\texpected: %v\n\tgot: %v", got[i], c.want[i])
 				}
 			}
 		})
