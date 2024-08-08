@@ -12,6 +12,7 @@ func startRepl(cfg *config) {
 	reader := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Welcome to MyGroceryList!")
+	fmt.Println("Use 'help' for the list of available commands.")
 
 	// Loop until user enters 'exit' command
 	for {
