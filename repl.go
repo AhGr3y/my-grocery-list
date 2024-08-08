@@ -20,7 +20,7 @@ func startRepl(cfg *config) {
 		userInput := reader.Text()
 
 		// Check if user entered valid command,
-		// returns any subsequent arguments.
+		// returns back the user arguments.
 		args, err := validateCommand(userInput)
 		if err != nil {
 			if errors.Is(err, ErrEmptyCommand) {

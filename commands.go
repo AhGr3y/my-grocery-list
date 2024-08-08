@@ -27,7 +27,19 @@ func getCommands() map[string]cliCommand {
 			description: "See the guide for using this program",
 			callback:    commandHelp,
 		},
+		"store": {
+			name:        "store",
+			description: "Add item(s) to inventory",
+			callback:    commandStore,
+		},
 	}
+}
+
+func wordsToLower(words []string) []string {
+	for i := range words {
+		words[i] = strings.ToLower(words[i])
+	}
+	return words
 }
 
 func validateCommand(userInput string) ([]string, error) {
