@@ -20,9 +20,8 @@ func startRepl(cfg *config) {
 		userInput := reader.Text()
 
 		// Check if user entered valid command,
-		// returns any subsequent arguments and
-		// the list of valid commands.
-		args, commandList, err := validateCommand(userInput)
+		// returns any subsequent arguments.
+		args, err := validateCommand(userInput)
 		if err != nil {
 			if errors.Is(err, ErrEmptyCommand) {
 				continue
@@ -33,6 +32,7 @@ func startRepl(cfg *config) {
 		}
 
 		// Execute command
+		commandList := getCommands()
 		err = commandList[userInput].callback(cfg, args...)
 		if err != nil {
 			fmt.Printf("MyGroceryList > " + err.Error())

@@ -15,14 +15,8 @@ type cliCommand struct {
 	callback    func(*config, ...string) error
 }
 
-func validateCommand(userInput string) ([]string, map[string]cliCommand, error) {
-	// Ignore empty command
-	if userInput == "" {
-		return []string{}, map[string]cliCommand{}, ErrEmptyCommand
-	}
-
-	// List of valid commands
-	commandList := map[string]cliCommand{
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
 		"exit": {
 			name:        "exit",
 			description: "Exit the program",
@@ -34,6 +28,16 @@ func validateCommand(userInput string) ([]string, map[string]cliCommand, error) 
 			callback:    commandHelp,
 		},
 	}
+}
+
+func validateCommand(userInput string) ([]string, error) {
+	// Ignore empty command
+	if userInput == "" {
+		return []string{}, ErrEmptyCommand
+	}
+
+	// List of valid commands
+	commandList := getCommands()
 
 	// Split command from arguments
 	inputs := strings.Split(userInput, " ")
@@ -45,13 +49,13 @@ func validateCommand(userInput string) ([]string, map[string]cliCommand, error) 
 	// Check for valid command
 	_, commandExist := commandList[commandLower]
 	if !commandExist {
-		return []string{}, map[string]cliCommand{}, errors.New("invalid command. Use 'help' to view available commands")
+		return []string{}, errors.New("invalid command. Use 'help' to view available commands")
 	}
 
 	// Return arguments if any
 	if len(inputs) > 1 {
-		return inputs[1:], commandList, nil
+		return inputs[1:], nil
 	}
 
-	return []string{}, commandList, nil
+	return []string{}, nil
 }

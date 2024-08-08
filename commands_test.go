@@ -17,7 +17,7 @@ func TestCommandValidation(t *testing.T) {
 
 	for name, c := range cases {
 		t.Run(name, func(t *testing.T) {
-			got, _, _ := validateCommand(c.input)
+			got, _ := validateCommand(c.input)
 			if len(got) != len(c.want) {
 				t.Errorf("Unexpected slice length\n\texpected: %v\n\tgot: %v", len(got), len(c.want))
 			}
