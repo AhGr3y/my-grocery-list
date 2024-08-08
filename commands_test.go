@@ -11,11 +11,11 @@ func TestCommandValidation(t *testing.T) {
 		want  []string
 	}{
 		"empty":               {input: "", want: []string{}},
-		"valid one":           {input: "help", want: []string{}},
-		"valid one uppercase": {input: "HELP", want: []string{}},
-		//"valid many":   {input: "store hand_soap dettol 1", want: []string{"hand_soap", "dettol", "1"}},
-		"invalid one":  {input: "invalidCommand", want: []string{}},
-		"invalid many": {input: "invalid commands", want: []string{}},
+		"valid one":           {input: "help", want: []string{"help"}},
+		"valid one uppercase": {input: "HELP", want: []string{"help"}},
+		"valid many":          {input: "store hand_soap dettol 1", want: []string{"store", "hand_soap", "dettol", "1"}},
+		"invalid one":         {input: "invalidCommand", want: []string{}},
+		"invalid many":        {input: "invalid commands", want: []string{}},
 	}
 
 	for name, c := range cases {

@@ -7,7 +7,7 @@ import (
 
 func commandHelp(cfg *config, args ...string) error {
 	// help command does not require additional arguments
-	if len(args) != 0 {
+	if len(args) != 1 {
 		return errors.New("'help' command does not require additional arguments. Use 'help' instead")
 	}
 
@@ -21,9 +21,10 @@ func commandHelp(cfg *config, args ...string) error {
 	fmt.Printf("\t<command> [args ...]\n")
 	fmt.Println()
 	fmt.Println("List of commands:")
-	for name, command := range commandList {
+	for _, command := range commandList {
 		fmt.Println()
-		fmt.Printf("\t%v\n", name)
+		fmt.Printf("\t%v\n", command.name)
+		fmt.Println()
 		fmt.Printf("\t    %v\n", command.description)
 	}
 	fmt.Println("--------------------------------------------------------------------------")

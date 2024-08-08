@@ -19,17 +19,17 @@ func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"exit": {
 			name:        "exit",
-			description: "Exit the program",
+			description: "Exit the program.",
 			callback:    commandExit,
 		},
 		"help": {
 			name:        "help",
-			description: "See the guide for using this program",
+			description: "See the guide for using this program.",
 			callback:    commandHelp,
 		},
 		"store": {
-			name:        "store",
-			description: "Add item(s) to inventory",
+			name:        "store name brand [quantity]",
+			description: "Add item(s) to inventory. For example, store hand_soap dettol 2.",
 			callback:    commandStore,
 		},
 	}
@@ -53,21 +53,16 @@ func validateCommand(userInput string) ([]string, error) {
 
 	// Split command from arguments
 	inputs := strings.Split(userInput, " ")
-	command := inputs[0]
 
-	// Command is case-insensitive
-	commandLower := strings.ToLower(command)
+	// Inputs are case-insensitive
+	inputsLower := wordsToLower(inputs)
 
 	// Check for valid command
-	_, commandExist := commandList[commandLower]
+	command := inputsLower[0]
+	_, commandExist := commandList[command]
 	if !commandExist {
 		return []string{}, errors.New("invalid command. Use 'help' to view available commands")
 	}
 
-	// Return arguments if any
-	if len(inputs) > 1 {
-		return inputs[1:], nil
-	}
-
-	return []string{}, nil
+	return inputsLower, nil
 }

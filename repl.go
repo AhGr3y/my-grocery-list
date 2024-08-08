@@ -33,9 +33,10 @@ func startRepl(cfg *config) {
 
 		// Execute command
 		commandList := getCommands()
-		err = commandList[userInput].callback(cfg, args...)
+		command := args[0]
+		err = commandList[command].callback(cfg, args...)
 		if err != nil {
-			fmt.Printf("MyGroceryList > " + err.Error())
+			fmt.Printf("Error: %v.\n", err.Error())
 			continue
 		}
 	}
