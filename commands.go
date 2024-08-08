@@ -6,8 +6,7 @@ import (
 )
 
 var (
-	ErrEmptyCommand   = errors.New("empty command")
-	ErrInvalidCommand = errors.New("invalid command. Use 'help' to view available commands")
+	ErrEmptyCommand = errors.New("empty command")
 )
 
 type cliCommand struct {
@@ -46,7 +45,7 @@ func validateCommand(userInput string) ([]string, map[string]cliCommand, error) 
 	// Check for valid command
 	_, commandExist := commandList[commandLower]
 	if !commandExist {
-		return []string{}, map[string]cliCommand{}, ErrInvalidCommand
+		return []string{}, map[string]cliCommand{}, errors.New("invalid command. Use 'help' to view available commands")
 	}
 
 	// Return arguments if any
