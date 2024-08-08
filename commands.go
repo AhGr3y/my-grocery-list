@@ -36,8 +36,9 @@ func validateCommand(userInput string) ([]string, error) {
 
 	inputs := strings.Split(userInput, " ")
 	command := inputs[0]
+	commandLower := strings.ToLower(command)
 
-	_, commandExist := commandList[command]
+	_, commandExist := commandList[commandLower]
 	if !commandExist {
 		return []string{}, ErrInvalidCommand
 	}

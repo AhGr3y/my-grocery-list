@@ -7,8 +7,9 @@ func TestCommandValidation(t *testing.T) {
 		input string
 		want  []string
 	}{
-		"empty":     {input: "", want: []string{}},
-		"valid one": {input: "help", want: []string{}},
+		"empty":               {input: "", want: []string{}},
+		"valid one":           {input: "help", want: []string{}},
+		"valid one uppercase": {input: "HELP", want: []string{}},
 		//"valid many":   {input: "store hand_soap dettol 1", want: []string{"hand_soap", "dettol", "1"}},
 		"invalid one":  {input: "invalidCommand", want: []string{}},
 		"invalid many": {input: "invalid commands", want: []string{}},
