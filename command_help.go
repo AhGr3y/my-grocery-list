@@ -12,8 +12,20 @@ func commandHelp(cfg *config, args ...string) error {
 		return errors.New("'help' command does not require additional arguments. Use 'help' instead")
 	}
 
-	intro := `
+	intro := `--------------------------------------------------------------------------
 MyGroceryList is a inventory management tool that acts as a grocery list.
+
+Usage:
+
+	<command> [args ...]
+
+List of commands:
+
+	help
+		See help
+	exit
+		Exit this program.
+--------------------------------------------------------------------------
 `
 
 	fmt.Println(intro)
