@@ -27,7 +27,7 @@ func main() {
 	// Open a connection to the database
 	db, err := sql.Open("postgres", dbUrl)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Error connecting to database: %s", err)
 	}
 
 	// Initialize appConfig
