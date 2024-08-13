@@ -25,12 +25,12 @@ func getCommands() map[string]cliCommand {
 		},
 		"help": {
 			name:        "help",
-			description: "See the guide for using this program.",
+			description: "See the list of available commands.",
 			callback:    commandHelp,
 		},
 		"store": {
-			name:        "store name brand [quantity]",
-			description: "Store item(s) to inventory. Replace spaces ' ' with underscores '_' for multi-word name and brand.\n\t    For example, store hand_soap dettol 2.",
+			name:        "store",
+			description: "Store item(s) to inventory.",
 			callback:    commandStore,
 		},
 	}

@@ -13,6 +13,26 @@ import (
 	"github.com/google/uuid"
 )
 
+const getItemOnHand = `-- name: GetItemOnHand :one
+SELECT id, created_at, updated_at, item_id, quantity, expiry_date, priority FROM items_on_hand
+WHERE item_id = $1
+`
+
+func (q *Queries) GetItemOnHand(ctx context.Context, itemID uuid.UUID) (ItemsOnHand, error) {
+	row := q.db.QueryRowContext(ctx, getItemOnHand, itemID)
+	var i ItemsOnHand
+	err := row.Scan(
+		&i.ID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.ItemID,
+		&i.Quantity,
+		&i.ExpiryDate,
+		&i.Priority,
+	)
+	return i, err
+}
+
 const storeItem = `-- name: StoreItem :one
 INSERT INTO items_on_hand(id, created_at, updated_at, item_id, quantity, expiry_date, priority)
 VALUES ($1, $2, $3, $4, $5, $6, $7)

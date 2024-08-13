@@ -16,10 +16,6 @@ func commandHelp(cfg *config, args ...string) error {
 	fmt.Println("--------------------------------------------------------------------------")
 	fmt.Println("MyGroceryList is a inventory management tool that acts as a grocery list.")
 	fmt.Println()
-	fmt.Println("Usage:")
-	fmt.Println()
-	fmt.Printf("\t<command> [args ...]\n")
-	fmt.Println()
 	fmt.Println("List of commands:")
 	for _, command := range commandList {
 		fmt.Println()

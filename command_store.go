@@ -2,17 +2,11 @@ package main
 
 import (
 	"bufio"
-	"context"
 	"errors"
 	"fmt"
 	"os"
 	"strconv"
 )
-
-func checkBrand(cfg *config, brand string) bool {
-	_, err := cfg.DB.GetBrand(context.Background(), brand)
-	return err == nil
-}
 
 func promptUserForYesNo() (bool, error) {
 	reader := bufio.NewScanner(os.Stdin)
@@ -48,11 +42,16 @@ func commandStore(cfg *config, args ...string) error {
 	}
 
 	// TODO: GET INVENTORY QUANTITY
+	// 1. CHECK FOR BRAND
+	// 2. IF EXIST: GOT BRAND ID
+	// 3. IF DONT EXIST: CREATE BRAND, GET NEW ID
+	// 4. GET ITEM ID FROM ITEM NAME AND BRAND ID
+	// 5. GET ITEM ON HAND FROM ITEM ID
 
 	// Get user confirmation to create new brand
 	item_name := args[1]
 	item_brand := args[2]
-	brandExist := checkBrand(cfg, item_brand)
+	_, brandExist := checkBrand(cfg, item_brand)
 	if !brandExist {
 		// Loop until user input valid response
 		for {

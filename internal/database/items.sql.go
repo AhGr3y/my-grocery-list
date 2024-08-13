@@ -47,3 +47,27 @@ func (q *Queries) CreateItem(ctx context.Context, arg CreateItemParams) (Item, e
 	)
 	return i, err
 }
+
+const getItemFromName = `-- name: GetItemFromName :one
+SELECT id, created_at, updated_at, name, brand_id, category_id FROM items
+WHERE name = $1 AND brand_id = $2
+`
+
+type GetItemFromNameParams struct {
+	Name    string
+	BrandID uuid.UUID
+}
+
+func (q *Queries) GetItemFromName(ctx context.Context, arg GetItemFromNameParams) (Item, error) {
+	row := q.db.QueryRowContext(ctx, getItemFromName, arg.Name, arg.BrandID)
+	var i Item
+	err := row.Scan(
+		&i.ID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Name,
+		&i.BrandID,
+		&i.CategoryID,
+	)
+	return i, err
+}
