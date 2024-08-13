@@ -17,6 +17,8 @@ func startRepl(cfg *config) {
 	// Loop until user enters 'exit' command
 	for {
 		fmt.Print("MyGroceryList > ")
+
+		// Get user input
 		reader.Scan()
 		userInput := reader.Text()
 

@@ -42,26 +42,25 @@ func validateCommand(userInput string) (string, error) {
 		return "", ErrEmptyCommand
 	}
 
-	// List of valid commands
-	commandList := getCommands()
-
 	// Only accept one argument
-	inputs := strings.Split(userInput, " ")
-	if len(inputs) != 1 {
+	userInputSplit := strings.Split(userInput, " ")
+	if len(userInputSplit) != 1 {
 		return "", errors.New("too many arguments. Use 'help' to view available commands")
 	}
 
-	// Inputs are case-insensitive
-	inputLower := strings.ToLower(inputs[0])
+	// Commands are case-insensitive
+	command := strings.ToLower(userInputSplit[0])
+
+	// List of valid commands
+	commandList := getCommands()
 
 	// Check for valid command
-	command := inputLower
 	_, commandExist := commandList[command]
 	if !commandExist {
 		return "", errors.New("invalid command. Use 'help' to view available commands")
 	}
 
-	return inputLower, nil
+	return command, nil
 }
 
 func processYesNo(userInput string) (bool, error) {
