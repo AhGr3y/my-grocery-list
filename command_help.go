@@ -1,15 +1,10 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
-func commandHelp(cfg *config, args ...string) error {
-	// help command does not require additional arguments
-	if len(args) != 1 {
-		return errors.New("'help' command does not require additional arguments. Use 'help' instead")
-	}
+func commandHelp(cfg *config) error {
 
 	commandList := getCommands()
 

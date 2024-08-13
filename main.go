@@ -15,7 +15,7 @@ type config struct {
 }
 
 func main() {
-	// Load environment variables in .env0
+	// Load environment variables in .env
 	godotenv.Load()
 
 	// Get database url from .env

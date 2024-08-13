@@ -22,20 +22,18 @@ func startRepl(cfg *config) {
 
 		// Check if user entered valid command,
 		// returns back the user arguments.
-		args, err := validateCommand(userInput)
+		command, err := validateCommand(userInput)
 		if err != nil {
 			if errors.Is(err, ErrEmptyCommand) {
 				continue
-			} else {
-				fmt.Printf("Error: %s.\n", err.Error())
-				continue
 			}
+			fmt.Printf("Error: %s.\n", err.Error())
+			continue
 		}
 
 		// Execute command
 		commandList := getCommands()
-		command := args[0]
-		err = commandList[command].callback(cfg, args...)
+		err = commandList[command].callback(cfg)
 		if err != nil {
 			fmt.Printf("Error: %v.\n", err.Error())
 			continue

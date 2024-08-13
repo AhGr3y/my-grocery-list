@@ -13,7 +13,7 @@ var (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config, ...string) error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -36,36 +36,32 @@ func getCommands() map[string]cliCommand {
 	}
 }
 
-func wordsToLower(words []string) []string {
-	for i := range words {
-		words[i] = strings.ToLower(words[i])
-	}
-	return words
-}
-
-func validateCommand(userInput string) ([]string, error) {
+func validateCommand(userInput string) (string, error) {
 	// Ignore empty command
 	if userInput == "" {
-		return []string{}, ErrEmptyCommand
+		return "", ErrEmptyCommand
 	}
 
 	// List of valid commands
 	commandList := getCommands()
 
-	// Split command from arguments
+	// Only accept one argument
 	inputs := strings.Split(userInput, " ")
-
-	// Inputs are case-insensitive
-	inputsLower := wordsToLower(inputs)
-
-	// Check for valid command
-	command := inputsLower[0]
-	_, commandExist := commandList[command]
-	if !commandExist {
-		return []string{}, errors.New("invalid command. Use 'help' to view available commands")
+	if len(inputs) != 1 {
+		return "", errors.New("too many arguments. Use 'help' to view available commands")
 	}
 
-	return inputsLower, nil
+	// Inputs are case-insensitive
+	inputLower := strings.ToLower(inputs[0])
+
+	// Check for valid command
+	command := inputLower
+	_, commandExist := commandList[command]
+	if !commandExist {
+		return "", errors.New("invalid command. Use 'help' to view available commands")
+	}
+
+	return inputLower, nil
 }
 
 func processYesNo(userInput string) (bool, error) {
