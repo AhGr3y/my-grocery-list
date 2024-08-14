@@ -62,31 +62,3 @@ func validateCommand(userInput string) (string, error) {
 
 	return command, nil
 }
-
-func processYesNo(userInput string) (bool, error) {
-	// Empty string defaults to yes
-	if userInput == "" {
-		return true, nil
-	}
-
-	// userInput is case-insensitive
-	inputLower := strings.ToLower(userInput)
-
-	// 'yes' or 'y' is acceptable
-	if inputLower == "y" {
-		return true, nil
-	}
-	if inputLower == "yes" {
-		return true, nil
-	}
-
-	// 'no' or 'n' is acceptable
-	if inputLower == "n" {
-		return false, nil
-	}
-	if inputLower == "no" {
-		return false, nil
-	}
-
-	return false, ErrInvalidCommand
-}
