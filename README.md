@@ -1,2 +1,2 @@
 # My Grocery List
-A grocery list and stock-taking REPL.
+A grocery list and stocktaking command-line program.
