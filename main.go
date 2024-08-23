@@ -15,6 +15,7 @@ type config struct {
 }
 
 func main() {
+
 	// Load environment variables in .env
 	godotenv.Load()
 
@@ -36,5 +37,5 @@ func main() {
 		DB: dbQueries,
 	}
 
-	startRepl(&cfg)
+	runApp(&cfg)
 }
