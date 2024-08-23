@@ -9,26 +9,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func processMainMenuInput(userInput string, ctx *cli.Context, cfg *config) error {
-	switch userInput {
-	case "Exit":
-		os.Exit(1)
-	case "Help":
-		return cli.ShowAppHelp(ctx)
-	case "Store Item":
-		return processStoreCommand(cfg)
-	default:
-		return nil
-	}
-	return nil
+func processMainMenuInput(userInput string, app *cli.App, ctx *cli.Context, cfg *config) error {
+	cliCommand := cliCommands[userInput]
+	return cliCommand.callback(app, ctx, cfg)
 }
 
 func runApp(cfg *config) {
 	app := cli.NewApp()
 	app.Name = "MyGroceryList"
 	app.Usage = "A grocery list and stocktaking command-line program."
-
-	app.CustomAppHelpTemplate = "NAME:\n\t{{.Name}} - {{.Usage}}\n"
 
 	/*
 		// Set commands
@@ -65,7 +54,7 @@ func runApp(cfg *config) {
 		if err != nil {
 			log.Fatalf("Error running prompt: %s", err)
 		}
-		err = processMainMenuInput(result, ctx, cfg)
+		err = processMainMenuInput(result, app, ctx, cfg)
 		if err != nil {
 			return err
 		}

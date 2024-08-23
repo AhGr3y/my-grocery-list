@@ -1,8 +1,10 @@
 package main
 
-import "errors"
+import (
+	"github.com/urfave/cli/v2"
+)
 
-func processStoreCommand(cfg *config) error {
+func commandStoreItem(app *cli.App, ctx *cli.Context, cfg *config) error {
 
-	return errors.New("error processing command")
+	return nil
 }
