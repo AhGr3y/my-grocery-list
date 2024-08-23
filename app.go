@@ -28,9 +28,6 @@ func runApp(cfg *config) {
 	app.Name = "MyGroceryList"
 	app.Usage = "A grocery list and stocktaking command-line program."
 
-	// Configure app commands
-	configCommands(app, cfg)
-
 	mainMenuPrompt := promptui.Select{
 		Label: "Press <Enter> to select one of these options",
 		Items: []string{
@@ -39,12 +36,18 @@ func runApp(cfg *config) {
 	}
 
 	app.Action = func(ctx *cli.Context) error {
+		// Configure app commands
+		configCommands(app, cfg)
+
+		// Display main menu
 		fmt.Println("-------------------------")
 		fmt.Println("Welcome to MyGroceryList!")
 		_, result, err := mainMenuPrompt.Run()
 		if err != nil {
 			log.Fatalf("Error running prompt: %s", err)
 		}
+
+		// Process user input
 		err = processMainMenuInput(result, app, ctx)
 		if err != nil {
 			return err
