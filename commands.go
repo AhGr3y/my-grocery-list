@@ -1,27 +1,32 @@
 package main
 
-import "github.com/urfave/cli/v2"
+import (
+	"github.com/urfave/cli/v2"
+)
 
-type cliCommand struct {
-	name        string
-	description string
-	callback    func(*cli.App, *cli.Context, *config) error
-}
+func configCommands(app *cli.App, cfg *config) {
+	app.Commands = []*cli.Command{
+		{
+			Name:  "Exit",
+			Usage: "Exit the program",
+			Action: func(ctx *cli.Context) error {
+				return commandExit(app, ctx, cfg)
+			},
+		},
+		{
+			Name:  "Help",
+			Usage: "Display program usage information",
+			Action: func(ctx *cli.Context) error {
+				return commandHelp(app, ctx, cfg)
+			},
+		},
+		{
+			Name:  "Store Item",
+			Usage: "Add an item to your inventory",
+			Action: func(ctx *cli.Context) error {
+				return commandStoreItem(app, ctx, cfg)
+			},
+		},
+	}
 
-var cliCommands = map[string]cliCommand{
-	"Exit": {
-		name:        "Exit",
-		description: "Exit the program",
-		callback:    commandExit,
-	},
-	"Help": {
-		name:        "Help",
-		description: "Display program usage information",
-		callback:    commandHelp,
-	},
-	"Store Item": {
-		name:        "Store Item",
-		description: "Add an item to your inventory",
-		callback:    commandStoreItem,
-	},
 }

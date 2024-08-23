@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -9,9 +10,17 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func processMainMenuInput(userInput string, app *cli.App, ctx *cli.Context, cfg *config) error {
-	cliCommand := cliCommands[userInput]
-	return cliCommand.callback(app, ctx, cfg)
+func processMainMenuInput(userInput string, app *cli.App, ctx *cli.Context) error {
+	for _, command := range app.Commands {
+		if userInput == command.Name {
+			err := command.Action(ctx)
+			if err != nil {
+				return err
+			}
+			return nil
+		}
+	}
+	return errors.New("command doesn't exist")
 }
 
 func runApp(cfg *config) {
@@ -19,26 +28,8 @@ func runApp(cfg *config) {
 	app.Name = "MyGroceryList"
 	app.Usage = "A grocery list and stocktaking command-line program."
 
-	/*
-		// Set commands
-		app.Commands = []*cli.Command{
-			{
-				Name:    "punch",
-				Aliases: []string{"p"},
-				Usage:   "Options for punching",
-				Subcommands: []*cli.Command{
-					{
-						Name:  "random",
-						Usage: "Punch a random person",
-						Action: func(ctx *cli.Context) error {
-							fmt.Println("You punched a random person!")
-							return nil
-						},
-					},
-				},
-			},
-		}
-	*/
+	// Configure app commands
+	configCommands(app, cfg)
 
 	mainMenuPrompt := promptui.Select{
 		Label: "Press <Enter> to select one of these options",
@@ -54,7 +45,7 @@ func runApp(cfg *config) {
 		if err != nil {
 			log.Fatalf("Error running prompt: %s", err)
 		}
-		err = processMainMenuInput(result, app, ctx, cfg)
+		err = processMainMenuInput(result, app, ctx)
 		if err != nil {
 			return err
 		}
