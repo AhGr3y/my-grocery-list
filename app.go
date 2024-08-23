@@ -9,6 +9,19 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+func processMainMenuInput(userInput string, ctx *cli.Context) error {
+
+	switch userInput {
+	case "Exit":
+		os.Exit(1)
+	case "Help":
+		cli.ShowAppHelp(ctx)
+	default:
+		return nil
+	}
+	return nil
+}
+
 func runApp(cfg *config) {
 	app := cli.NewApp()
 	app.Name = "MyGroceryList"
@@ -48,6 +61,7 @@ func runApp(cfg *config) {
 	}
 
 	app.Action = func(ctx *cli.Context) error {
+		fmt.Println("-------------------------")
 		fmt.Println("Welcome to MyGroceryList!")
 		_, result, err := mainMenuPrompt.Run()
 		if err != nil {
@@ -60,20 +74,11 @@ func runApp(cfg *config) {
 		return nil
 	}
 
-	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+	// Loop until user use Exit command
+	for {
+		if err := app.Run(os.Args); err != nil {
+			log.Fatal(err)
+		}
 	}
-}
 
-func processMainMenuInput(userInput string, ctx *cli.Context) error {
-
-	switch userInput {
-	case "Exit":
-		os.Exit(1)
-	case "Help":
-		cli.ShowAppHelp(ctx)
-	default:
-		return nil
-	}
-	return nil
 }
