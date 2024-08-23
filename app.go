@@ -9,13 +9,14 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func processMainMenuInput(userInput string, ctx *cli.Context) error {
-
+func processMainMenuInput(userInput string, ctx *cli.Context, cfg *config) error {
 	switch userInput {
 	case "Exit":
 		os.Exit(1)
 	case "Help":
-		cli.ShowAppHelp(ctx)
+		return cli.ShowAppHelp(ctx)
+	case "Store Item":
+		return processStoreCommand(cfg)
 	default:
 		return nil
 	}
@@ -25,7 +26,9 @@ func processMainMenuInput(userInput string, ctx *cli.Context) error {
 func runApp(cfg *config) {
 	app := cli.NewApp()
 	app.Name = "MyGroceryList"
-	app.Usage = "Your very own household inventory grocery list."
+	app.Usage = "A grocery list and stocktaking command-line program."
+
+	app.CustomAppHelpTemplate = "NAME:\n\t{{.Name}} - {{.Usage}}\n"
 
 	/*
 		// Set commands
@@ -53,11 +56,6 @@ func runApp(cfg *config) {
 		Items: []string{
 			"Store Item", "Help", "Exit",
 		},
-		/*
-			Templates: &promptui.SelectTemplates{
-				Help: "Hello",
-			},
-		*/
 	}
 
 	app.Action = func(ctx *cli.Context) error {
@@ -67,7 +65,7 @@ func runApp(cfg *config) {
 		if err != nil {
 			log.Fatalf("Error running prompt: %s", err)
 		}
-		err = processMainMenuInput(result, ctx)
+		err = processMainMenuInput(result, ctx, cfg)
 		if err != nil {
 			return err
 		}
@@ -77,7 +75,7 @@ func runApp(cfg *config) {
 	// Loop until user use Exit command
 	for {
 		if err := app.Run(os.Args); err != nil {
-			log.Fatal(err)
+			fmt.Printf("Error: %s\n", err)
 		}
 	}
 
