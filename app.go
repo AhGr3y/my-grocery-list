@@ -14,24 +14,26 @@ func runApp(cfg *config) {
 	app.Name = "MyGroceryList"
 	app.Usage = "Your very own household inventory grocery list."
 
-	// Set commands
-	app.Commands = []*cli.Command{
-		{
-			Name:    "punch",
-			Aliases: []string{"p"},
-			Usage:   "Options for punching",
-			Subcommands: []*cli.Command{
-				{
-					Name:  "random",
-					Usage: "Punch a random person",
-					Action: func(ctx *cli.Context) error {
-						fmt.Println("You punched a random person!")
-						return nil
+	/*
+		// Set commands
+		app.Commands = []*cli.Command{
+			{
+				Name:    "punch",
+				Aliases: []string{"p"},
+				Usage:   "Options for punching",
+				Subcommands: []*cli.Command{
+					{
+						Name:  "random",
+						Usage: "Punch a random person",
+						Action: func(ctx *cli.Context) error {
+							fmt.Println("You punched a random person!")
+							return nil
+						},
 					},
 				},
 			},
-		},
-	}
+		}
+	*/
 
 	mainMenuPrompt := promptui.Select{
 		Label: "Press <Enter> to select one of these options",

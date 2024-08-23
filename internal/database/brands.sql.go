@@ -41,20 +41,3 @@ func (q *Queries) CreateBrand(ctx context.Context, arg CreateBrandParams) (Brand
 	)
 	return i, err
 }
-
-const getBrand = `-- name: GetBrand :one
-SELECT id, created_at, updated_at, name FROM brands
-WHERE name = $1
-`
-
-func (q *Queries) GetBrand(ctx context.Context, name string) (Brand, error) {
-	row := q.db.QueryRowContext(ctx, getBrand, name)
-	var i Brand
-	err := row.Scan(
-		&i.ID,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-		&i.Name,
-	)
-	return i, err
-}
